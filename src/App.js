@@ -15,6 +15,7 @@ function App() {
     const [checkedQuestion, setCheckedQuestion] = useState(false);
     const [score, setScore] = useState(0);
     const [playAgain, setPlayAgain] = useState(1);
+    const [showConfetti, setShowConfetti] = useState(false);
     
 
     // Handle clicking start the quiz button, if so render the questions component
@@ -58,6 +59,12 @@ function App() {
             setScore( () => {
                 return questions.filter( question => question.correctAnswer === question.selectedAnswer).length;
             });
+
+            // Display the confetti
+            setShowConfetti(true);
+            
+            // Stop displaying the confetti
+            setTimeout( () => setShowConfetti(false), 5000);
         }
     }
 
@@ -91,7 +98,7 @@ function App() {
     
     return (
         <div className='container'>
-            { checkedQuestion && <Confetti width={ width } height={ height } /> }
+            { (checkedQuestion && showConfetti) && <Confetti width={ width } height={ height }  /> }
             {
                 !start 
                 ? <Intro 
